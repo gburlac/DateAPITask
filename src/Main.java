@@ -2,10 +2,41 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
-import java.util.Date;
+import java.util.Calendar;
 
 public class Main {
+    public static int getDayOfWeek() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(1977, Calendar.MAY, 25);
+        DayOfWeek dayOfWeek = LocalDate.parse("1977-05-25").getDayOfWeek();
+        return calendar.get(Calendar.DAY_OF_WEEK);
+    }
+
+    public static int numbersOfPlay() {
+
+        Calendar start = Calendar.getInstance();
+        start.set(1977, Calendar.MAY, 25);
+        Calendar end = Calendar.getInstance();
+        end.set(1979, Calendar.MAY, 25);
+
+        int numOfPlay = 0;
+        int monday = Calendar.MONDAY;
+        while (start.before(end)) {
+
+            if (start.get(Calendar.DAY_OF_WEEK) == monday) {
+                numOfPlay++;
+                start.add(Calendar.DATE, 7);
+            } else {
+
+                start.add(Calendar.DATE, 1);
+            }
+        }
+        if (getDayOfWeek() != (1 & 7)) {
+            numOfPlay++;
+        }
+        return numOfPlay;
+
+    }
 
     public static void main(String[] args) {
 
@@ -18,13 +49,17 @@ public class Main {
         System.out.println("What day of the week was it released? Day of release is:  " + dayOfWeek);
 
 //        How many times was it played in the first 2 years?
-        LocalDate start = LocalDate.parse("1977-05-25");
-        LocalDate end = LocalDate.parse("1979-05-25");
-        LocalDate.parse("1977-05-25").plus(2, ChronoUnit.YEARS);
+        System.out.println("How many times was it played in the first 2 years? Was played: " + numbersOfPlay());
 
+//        How many TOTAL minutes/hours/days of playtime it summed up in the 1st year?
+        int totalMinutes = ((numbersOfPlay() / 2) + 1) * 120;
+        System.out.println("How many TOTAL minutes? " + totalMinutes);
 
+        int totalHours = totalMinutes / 60;
+        System.out.println("How many TOTAL hours? " + totalHours);
 
-
+        int totalDays = totalHours / 24;
+        System.out.println("How many TOTAL days? " + totalDays);
 
 
     }
